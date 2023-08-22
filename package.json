@@ -2,9 +2,10 @@
     "name": "nyaa-api",
     "version": "0.0.1",
     "description": "unofficial api wrapper for nyaa.si ",
-    "main": "index.js",
+    "main": "src/index.ts",
     "scripts": {
-        "dev": "ts-node src/index.ts"
+        "dev": "tsc && ts-node ./test.ts",
+        "build": "tsc"
     },
     "repository": {
         "type": "git",
@@ -23,12 +24,16 @@
         "url": "https://github.com/sayeed205/nyaa-api/issues"
     },
     "homepage": "https://github.com/sayeed205/nyaa-api#readme",
+    "publishConfig": {
+        "main": "bin/index.js",
+        "types": "bin/index.d.ts"
+    },
     "dependencies": {
-        "axios": "^1.3.4",
+        "axios": "^1.4.0",
         "cheerio": "^1.0.0-rc.12",
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
-        "typescript": "^5.0.2"
+        "typescript": "^5.1.6"
     }
 }

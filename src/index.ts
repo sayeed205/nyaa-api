@@ -1,1 +1,3 @@
-export * from './nyaa';
+import { Nyaa } from './nyaa';
+
+export default Nyaa;

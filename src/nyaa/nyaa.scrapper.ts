@@ -1,10 +1,9 @@
-import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { torrent } from '../types';
+import { Torrent } from '../types';
 
-export const getTorrent = (html: any) => {
+export const getTorrents = (html: string, url: string) => {
     const $ = cheerio.load(html);
-    const torrents: torrent[] = [];
+    const torrents: Torrent[] = [];
 
     $('tr').each((i, elem) => {
         const id = $(elem)
@@ -12,6 +11,7 @@ export const getTorrent = (html: any) => {
             .attr('href')
             ?.replace('/view/', '');
         const name = $(elem).find('td:nth-child(2) > a').text().trim();
+        const link = $(elem).find('td:nth-child(3) > a').attr('href');
         const magnet = $(elem)
             .find('td:nth-child(3)')
             .find('a:nth-child(2)')
@@ -36,6 +36,7 @@ export const getTorrent = (html: any) => {
             torrents.push({
                 id: parseInt(id),
                 name,
+                link: url + '/view/' + id,
                 magnet,
                 hash,
                 size,
@@ -51,7 +52,7 @@ export const getTorrent = (html: any) => {
     return torrents;
 };
 
-const res = axios.get('https://nyaa.land').then(async res => {
-    const data = getTorrent(res.data);
-    console.log(data);
-});
+// const res = axios.get('https://nyaa.land').then(async res => {
+//     const data = getTorrent(res.data);
+//     console.log(data);
+// });
