@@ -21,6 +21,8 @@ export class Nyaa {
      *                      page: 1,
      *                      category: 'all', // all, anime, audio, literature, live-action, pictures, software, games
      *                      filter: 'no filter', // no filter, trusted only, no remakes
+     *                     sort: '', // comments, size, date, seeders, leechers, downloads
+     *                    order: '', // asc, desc
      *                  }
      *
      * @example
@@ -111,6 +113,12 @@ export class Nyaa {
         return torrents;
     }
 
+    /**
+     * Search torrents by user
+     * @param username string - username
+     * @param options Search options
+     * @returns Torrents
+     */
     async searchByUser(
         username: string,
         options: SearchByUserOptions = {
