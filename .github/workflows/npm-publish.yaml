@@ -1,0 +1,36 @@
+name: publish on npm
+on:
+    push:
+        branches:
+            - main
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18]
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v3
+
+            - uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  cache: 'pnpm'
+                  registry-url: https://registry.npmjs.org/
+
+            - name: install dependencies
+              run: pnpm install
+
+            - name: build
+              run: pnpm build
+
+            - name: publish
+              run: pnpm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

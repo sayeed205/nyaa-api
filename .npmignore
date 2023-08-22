@@ -1,0 +1,13 @@
+.git
+node_modules
+src/**/*.ts
+src/*
+tsconfig.json
+.gitattributes
+.gitignore
+test.ts
+
+.github/**/*
+.github/*
+
+.vscode/**/*
