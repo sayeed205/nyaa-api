@@ -51,8 +51,3 @@ export const getTorrents = (html: string, url: string) => {
     });
     return torrents;
 };
-
-// const res = axios.get('https://nyaa.land').then(async res => {
-//     const data = getTorrent(res.data);
-//     console.log(data);
-// });

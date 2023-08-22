@@ -104,7 +104,6 @@ export class Nyaa {
         const o = order ? order : '';
 
         const url = `${this.url}?f=${f}&c=${c}&q=${query}&p=${p}&s=${s}&o=${o}`;
-        console.log(url);
         const res = await fetch(url);
         const data = await res.text();
 
@@ -178,7 +177,6 @@ export class Nyaa {
         const o = order ? order : '';
 
         const url = `${this.url}/user/${username}?f=${f}&c=${c}&q=&p=${p}&s=${s}&o=${o}`;
-        console.log(url);
         const res = await fetch(url);
         const data = await res.text();
 
