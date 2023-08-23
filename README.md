@@ -15,7 +15,13 @@ pnpm add nyaa-si
 ```js
 const Nyaa = require('nyaa-si'); // or import Nyaa from 'nyaa-si'
 
-const nyaa = new Nyaa();
+
+const options = {
+    baseUrl: 'https://nyaa.si' // or https://nyaa.land or whatever domain you want to use
+    mode: "html" // or "rss"
+} // this is optional
+
+const nyaa = new Nyaa(options);
 
 const options = {
     page: 1,
@@ -29,21 +35,18 @@ const options = {
 const torrents = await nyaa.search('One Piece', options);
 /**
  * [
- *  {
- *      id: 1703892,
- *      name: '2[Judas] One Piece - 1072 [1080p [HEVC x265 10bit][Multi-Subs] (Weekly)',
- *      link: 'https://nyaa.land/view 1703892#comments',
- *      magnet: 'magnet: xt=urn:btih:a5feee8bf15144c7c241a52d6047fc9955f62 c3...',
- *      hash: 'a5feee8bf15144c7c241a52d6047fc9955f629c3',
- *      size: '507.6 MiB',
- *      category: 'Anime - English-translated',
- *      date: 2023-08-13T04:20:50.000Z,
- *      seeders: 196,
- *      leechers: 0,
- *      downloads: 4799,
- *      status: 'danger'
- *  }, ...
- * ]
+*     {
+*      id: 000000,
+*      name: 'One Piece by Oda',
+*      date: 2023-08-13T04:20:50.000Z,
+*      seeders: 69,
+*      leechers: 69420,
+*      downloads: 6969,
+*      magnet: 'magnet:?xt=urn:btih:a5fe...',
+*      size: '507.6 MiB',
+*      category: 'Anime - English-translated',
+*    }, ...
+* ]
  */
 ```
 
@@ -95,7 +98,7 @@ The search options.
 {
     "page": 1,
     "category": "all", // all, anime, audio, literature, live-action, pictures, software, games
-    "filter": "no filter" // no filter, trusted only, no remakes
+    "filter": "no filter", // no filter, trusted only, no remakes
     "sort": "date", // date, downloads, size, seeders, leechers, comments
     "order": "desc", // desc, asc
     "query": "One Piece" // The search query
