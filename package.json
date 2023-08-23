@@ -5,7 +5,9 @@
     "main": "bin/index.js",
     "scripts": {
         "dev": "tsc && ts-node ./test.ts",
-        "build": "tsc"
+        "build": "rimraf bin && tsc",
+        "publish": "pnpm publish --access public",
+        "prepublish": "pnpm build"
     },
     "repository": {
         "type": "git",
@@ -29,11 +31,11 @@
         "types": "bin/index.d.ts"
     },
     "dependencies": {
-        "axios": "^1.4.0",
-        "cheerio": "^1.0.0-rc.12",
-        "ts-node": "^10.9.1"
+        "cheerio": "^1.0.0-rc.12"
     },
     "devDependencies": {
+        "rimraf": "5.0.1",
+        "ts-node": "^10.9.1",
         "typescript": "^5.1.6"
     }
 }

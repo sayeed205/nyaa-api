@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import { Torrent } from '../types';
 
-export const getTorrents = (html: string, url: string) => {
+export const getTorrentsFromHTML = (html: string) => {
     const $ = cheerio.load(html);
     const torrents: Torrent[] = [];
 
@@ -11,12 +11,10 @@ export const getTorrents = (html: string, url: string) => {
             .attr('href')
             ?.replace('/view/', '');
         const name = $(elem).find('td:nth-child(2) > a').text().trim();
-        const link = $(elem).find('td:nth-child(3) > a').attr('href');
         const magnet = $(elem)
             .find('td:nth-child(3)')
             .find('a:nth-child(2)')
             .attr('href');
-        const hash = magnet?.match(/btih:(.*?)&/)?.[1];
         const size = $(elem).find('td:nth-child(4)').text().trim();
         const category = $(elem).find('td:nth-child(1) > a').attr('title')!;
         const date = new Date(
@@ -30,24 +28,60 @@ export const getTorrents = (html: string, url: string) => {
         const downloads = parseInt(
             $(elem).find('td:nth-child(8)').text().trim()
         );
-        const status = $(elem).attr('class')!;
 
-        if (id && hash) {
+        if (id) {
             torrents.push({
                 id: parseInt(id),
                 name,
-                link: url + '/view/' + id,
-                magnet,
-                hash,
-                size,
-                category,
                 date,
                 seeders,
                 leechers,
                 downloads,
-                status,
+                magnet: magnet ? magnet : '',
+                category,
+                size,
             });
         }
     });
+    return torrents;
+};
+
+export const getTorrentsFromRSS = (html: string) => {
+    const $ = cheerio.load(html, { xmlMode: true });
+    const torrents: Torrent[] = [];
+
+    $('item').map((i, elem) => {
+        const id = $(elem)
+            .find('guid')
+            .text()
+            .replace('https://nyaa.land/view/', '');
+
+        const name = $(elem).find('title').text().trim();
+        const date = new Date($(elem).find('pubDate').text().trim());
+        const seeders = parseInt($(elem).find('nyaa\\:seeders').text().trim());
+        const leechers = parseInt(
+            $(elem).find('nyaa\\:leechers').text().trim()
+        );
+        const downloads = parseInt(
+            $(elem).find('nyaa\\:downloads').text().trim()
+        );
+        const hash = $(elem).find('nyaa\\:infoHash').text().trim();
+        const magnet = `magnet:?xt=urn:btih:${hash}&dn=${name}`;
+        const category = $(elem).find('nyaa\\:category').text().trim();
+        const size = $(elem).find('nyaa\\:size').text().trim();
+
+        torrents.push({
+            id: parseInt(id),
+            name,
+            date,
+            seeders,
+            leechers,
+            downloads,
+            magnet,
+            category,
+            size,
+        });
+    });
+
     return torrents;
 };

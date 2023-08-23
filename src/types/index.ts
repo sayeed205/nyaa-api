@@ -1,16 +1,13 @@
 export interface Torrent {
     id: number;
     name: string;
-    link: string;
     magnet: string;
-    hash: string;
     size: string;
     category: string;
     date: Date;
     seeders: number;
     leechers: number;
     downloads: number;
-    status: string;
 }
 
 export interface SearchOptions {
@@ -38,4 +35,9 @@ export interface SearchOptions {
 
 export interface SearchByUserOptions extends SearchOptions {
     query?: string;
+}
+
+export interface NyaaOptions {
+    baseUrl?: string;
+    mode?: 'rss' | 'html';
 }

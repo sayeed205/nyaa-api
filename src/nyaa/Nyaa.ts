@@ -1,14 +1,30 @@
-import { SearchByUserOptions, SearchOptions, Torrent } from '../types';
-import { getTorrents } from './nyaa.scrapper';
+import {
+    NyaaOptions,
+    SearchByUserOptions,
+    SearchOptions,
+    Torrent,
+} from '../types';
+import { getTorrentsFromHTML, getTorrentsFromRSS } from './nyaa.scrapper';
 
 /**
+ * Nyaa Instance - You can pass options to the constructor but it's not required
  * @example
  * import Nyaa from 'nyaa-api';
- * const nyaa = new Nyaa('https://nyaa.si/'); // default url is https://nyaa.land/
+ *
+ * const options = {
+ *     baseUrl: 'https://nyaa.land/',
+ *     mode: 'html',
+ * }
+ * const nyaa = new Nyaa(options);
  */
 export class Nyaa {
-    constructor(private readonly url: string = 'https://nyaa.land') {
-        this.url = url;
+    constructor(
+        private readonly options: NyaaOptions = {
+            baseUrl: 'https://nyaa.land/',
+            mode: 'html',
+        }
+    ) {
+        this.options = options;
     }
 
     /**
@@ -31,18 +47,15 @@ export class Nyaa {
      *
      * [
      *  {
-     *      id: 1703892,
-     *      name: '2[Judas] One Piece - 1072 [1080p][HEVC x265 10bit][Multi-Subs] (Weekly)',
-     *      link: 'https://nyaa.land/view/1703892#comments',
-     *      magnet: 'magnet:?xt=urn:btih:a5feee8bf15144c7c241a52d6047fc9955f629c3...',
-     *      hash: 'a5feee8bf15144c7c241a52d6047fc9955f629c3',
+     *      id: 000000,
+     *      name: 'One Piece by Oda',
+     *      date: 2023-08-13T04:20:50.000Z,
+     *      seeders: 69,
+     *      leechers: 69420,
+     *      downloads: 6969,
+     *      magnet: 'magnet:?xt=urn:btih:a5fe...',
      *      size: '507.6 MiB',
      *      category: 'Anime - English-translated',
-     *      date: 2023-08-13T04:20:50.000Z,
-     *      seeders: 196,
-     *      leechers: 0,
-     *      downloads: 4799,
-     *      status: 'danger'
      *  }, ...
      * ]
      */
@@ -103,12 +116,20 @@ export class Nyaa {
 
         const o = order ? order : '';
 
-        const url = `${this.url}?f=${f}&c=${c}&q=${query}&p=${p}&s=${s}&o=${o}`;
-        const res = await fetch(url);
-        const data = await res.text();
+        // const url = `${this.url}?f=${f}&c=${c}&q=${query}&p=${p}&s=${s}&o=${o}`;
+        // const res = await fetch(url);
+        // const data = await res.text();
 
-        const torrents = getTorrents(data, this.url);
-
+        // const torrents = getTorrents(data, this.url);
+        if (this.options.mode === 'rss') {
+            const url = `${this.options.baseUrl}?page=rss&q=${query}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
+            const res = await fetch(url).then(res => res.text());
+            const torrents = getTorrentsFromRSS(res);
+            return torrents;
+        }
+        const url = `${this.options.baseUrl}?&q=${query}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
+        const res = await fetch(url).then(res => res.text());
+        const torrents = getTorrentsFromHTML(res);
         return torrents;
     }
 
@@ -129,7 +150,7 @@ export class Nyaa {
             query: '',
         }
     ): Promise<Torrent[]> {
-        const { page, category, filter, sort, order } = options;
+        const { page, category, filter, sort, order, query } = options;
         const p = page ? page : 1;
         let c = '0_0';
         switch (category) {
@@ -175,13 +196,18 @@ export class Nyaa {
         const s = sort === 'date' ? 'id' : sort ? sort : '';
 
         const o = order ? order : '';
+        const q = query ? query : '';
 
-        const url = `${this.url}/user/${username}?f=${f}&c=${c}&q=&p=${p}&s=${s}&o=${o}`;
-        const res = await fetch(url);
-        const data = await res.text();
+        if (this.options.mode === 'rss') {
+            const url = `${this.options.baseUrl}?page=rss&u=${username}&q=${q}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
+            const res = await fetch(url).then(res => res.text());
+            const torrents = getTorrentsFromRSS(res);
+            return torrents;
+        }
 
-        const torrents = getTorrents(data, this.url);
-
+        const url = `${this.options.baseUrl}?&u=${username}&q=${q}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
+        const res = await fetch(url).then(res => res.text());
+        const torrents = getTorrentsFromHTML(res);
         return torrents;
     }
 }
