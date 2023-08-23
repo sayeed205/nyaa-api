@@ -1,12 +1,11 @@
 {
     "name": "nyaa-si",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "unofficial api wrapper for nyaa.si ",
     "main": "bin/index.js",
     "scripts": {
         "dev": "tsc && ts-node ./test.ts",
         "build": "rimraf bin && tsc",
-        "publish": "pnpm publish --access public",
         "prepublish": "pnpm build"
     },
     "repository": {
