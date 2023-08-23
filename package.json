@@ -1,6 +1,6 @@
 {
     "name": "nyaa-si",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "unofficial api wrapper for nyaa.si ",
     "main": "bin/index.js",
     "scripts": {
