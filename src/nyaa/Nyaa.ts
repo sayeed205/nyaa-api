@@ -116,11 +116,6 @@ export class Nyaa {
 
         const o = order ? order : '';
 
-        // const url = `${this.url}?f=${f}&c=${c}&q=${query}&p=${p}&s=${s}&o=${o}`;
-        // const res = await fetch(url);
-        // const data = await res.text();
-
-        // const torrents = getTorrents(data, this.url);
         if (this.options.mode === 'rss') {
             const url = `${this.options.baseUrl}?page=rss&q=${query}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
             const res = await fetch(url).then(res => res.text());
