@@ -2,9 +2,9 @@
     "name": "nyaa-si",
     "version": "2.1.0",
     "description": "unofficial api wrapper for nyaa.si ",
-    "main": "/dist/index.js",
-    "module": "/dist/index.mjs",
-    "types": "/dist/index.d.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
     "files": [
         "dist"
     ],
@@ -33,12 +33,7 @@
         "url": "https://github.com/sayeed205/nyaa-api/issues"
     },
     "homepage": "https://github.com/sayeed205/nyaa-api#readme",
-    "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "require": "./dist/index.mjs"
-        }
-    },
+   
     "devDependencies": {
         "@rollup/plugin-typescript": "11.1.0",
         "@types/node": "18.15.11",

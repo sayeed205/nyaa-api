@@ -93,6 +93,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+# npm package testing before publishing
+yalc*
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
