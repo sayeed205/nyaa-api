@@ -1,6 +1,14 @@
 <h1 align="center">Nyaa-si</h1>
 
-This is an unofficial API for nyaa - https://nyaa.si or https://nyaa.land or whatever domain you want to use. This allows you to search for torrents by name, category, or even user.
+This is an unofficial API for nyaa - https://nyaa.si or https://nyaa.land or whatever domain you want to use. This allows you to search for torrents by name, category, or even user. Use at your own risk.
+
+<div align="center">
+
+[![npm](https://img.shields.io/npm/v/nyaa-si?style=flat-square)](https://www.npmjs.com/package/nyaa-si)
+[![npm](https://img.shields.io/npm/dt/nyaa-si?style=flat-square)](https://www.npmjs.com/package/nyaa-si)
+![NPM](https://img.shields.io/npm/l/nyaa-si)
+
+</div>
 
 ## Install
 
@@ -15,38 +23,37 @@ pnpm add nyaa-si
 ```js
 const Nyaa = require('nyaa-si'); // or import Nyaa from 'nyaa-si'
 
-
 const options = {
-    baseUrl: 'https://nyaa.si' // or https://nyaa.land or whatever domain you want to use
-    mode: "html" // or "rss"
-} // this is optional
+    baseUrl: 'https://nyaa.si', // or https://nyaa.land or whatever domain you want to use
+    mode: 'html', // or "rss"
+}; // this is optional
 
 const nyaa = new Nyaa(options);
 
-const options = {
+const queryOptions = {
     page: 1,
     category: 'all', // all, anime, audio, literature, live-action, pictures, software, games
     filter: 'no filter', // no filter, trusted only, no remakes
-    sort: 'date' // date, downloads, size, seeders, leechers, comments
-    order: 'desc' // desc, asc
+    sort: 'date', // date, downloads, size, seeders, leechers, comments
+    order: 'desc', // desc, asc
 };
 
 // Search for torrents
-const torrents = await nyaa.search('One Piece', options);
+const torrents = await nyaa.search('One Piece', queryOptions);
 /**
  * [
-*     {
-*      id: 000000,
-*      name: 'One Piece by Oda',
-*      date: 2023-08-13T04:20:50.000Z,
-*      seeders: 69,
-*      leechers: 69420,
-*      downloads: 6969,
-*      magnet: 'magnet:?xt=urn:btih:a5fe...',
-*      size: '507.6 MiB',
-*      category: 'Anime - English-translated',
-*    }, ...
-* ]
+ *     {
+ *      id: 000000,
+ *      name: 'One Piece by Oda',
+ *      date: 2023-08-13T04:20:50.000Z,
+ *      seeders: 69,
+ *      leechers: 69420,
+ *      downloads: 6969,
+ *      magnet: 'magnet:?xt=urn:btih:a5fe...',
+ *      size: '507.6 MiB',
+ *      category: 'Anime - English-translated',
+ *    }, ...
+ * ]
  */
 ```
 
@@ -104,6 +111,15 @@ The search options.
     "query": "One Piece" // The search query
 }
 ```
+
+## TODO
+
+-   [x] Add support for sorting by various fields
+-   [x] Add support for searching by category
+-   [x] Add support for searching by user
+-   [ ] Add pagination support
+-   [ ] Add sukebei support
+-   [ ] Write tests for apis
 
 ## License
 
