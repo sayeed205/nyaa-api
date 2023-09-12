@@ -11,7 +11,8 @@
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prepublish": "pnpm build"
     },
     "repository": {
         "type": "git",
