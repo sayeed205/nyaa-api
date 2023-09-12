@@ -5,7 +5,7 @@ export const getTorrentsFromHTML = (html: string) => {
     const $ = cheerio.load(html);
     const torrents: Torrent[] = [];
 
-    $('tr').each((i, elem) => {
+    $('tr').each((_, elem) => {
         const id = $(elem)
             .find('td:nth-child(2) > a')
             .attr('href')
@@ -50,7 +50,7 @@ export const getTorrentsFromRSS = (html: string) => {
     const $ = cheerio.load(html, { xmlMode: true });
     const torrents: Torrent[] = [];
 
-    $('item').map((i, elem) => {
+    $('item').map((_, elem) => {
         const id = $(elem)
             .find('guid')
             .text()

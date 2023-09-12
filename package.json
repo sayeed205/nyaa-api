@@ -2,11 +2,16 @@
     "name": "nyaa-si",
     "version": "2.0.2",
     "description": "unofficial api wrapper for nyaa.si ",
-    "main": "bin/index.js",
+    "main": "/dist/index.js",
+    "module": "/dist/index.mjs",
+    "types": "/dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
     "scripts": {
-        "dev": "tsc && ts-node ./test.ts",
-        "build": "rimraf bin && tsc",
-        "prepublish": "pnpm build"
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
     },
     "repository": {
         "type": "git",
@@ -25,16 +30,23 @@
         "url": "https://github.com/sayeed205/nyaa-api/issues"
     },
     "homepage": "https://github.com/sayeed205/nyaa-api#readme",
-    "publishConfig": {
-        "main": "bin/index.js",
-        "types": "bin/index.d.ts"
-    },
-    "dependencies": {
-        "cheerio": "^1.0.0-rc.12"
+    "exports": {
+        ".": {
+            "import": "/dist/index.js",
+            "require": "/dist/index.mjs"
+        }
     },
     "devDependencies": {
-        "rimraf": "5.0.1",
-        "ts-node": "^10.9.1",
-        "typescript": "^5.1.6"
+        "@rollup/plugin-typescript": "11.1.0",
+        "@types/node": "18.15.11",
+        "rimraf": "4.4.1",
+        "rollup-plugin-typescript-paths": "1.4.0",
+        "tslib": "2.5.0",
+        "typescript": "^5.2.2",
+        "vite": "^4.4.9",
+        "vite-plugin-dts": "2.1.0"
+    },
+    "dependencies": {
+        "cheerio": "1.0.0-rc.12"
     }
 }

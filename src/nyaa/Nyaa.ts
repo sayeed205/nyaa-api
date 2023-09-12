@@ -34,12 +34,12 @@ export class Nyaa {
      *
      * @example
      * const options = {
-     *                      page: 1,
-     *                      category: 'all', // all, anime, audio, literature, live-action, pictures, software, games
-     *                      filter: 'no filter', // no filter, trusted only, no remakes
-     *                     sort: '', // comments, size, date, seeders, leechers, downloads
-     *                    order: '', // asc, desc
-     *                  }
+     *    page: 1,
+     *    category: 'all', // all, anime, audio, literature, live-action, pictures, software, games
+     *    filter: 'no filter', // no filter, trusted only, no remakes
+     *    sort: '', // comments, size, date, seeders, leechers, downloads
+     *    order: '', // asc, desc
+     *}
      *
      * @example
      * const torrents = await nyaa.search('one piece', options);
