@@ -38,6 +38,6 @@ export interface SearchByUserOptions extends SearchOptions {
 }
 
 export interface NyaaOptions {
-    baseUrl?: string;
-    mode?: 'rss' | 'html';
+    baseUrl: string;
+    mode: 'rss' | 'html';
 }
