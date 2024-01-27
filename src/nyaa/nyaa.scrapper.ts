@@ -19,14 +19,14 @@ export const getTorrentsFromHTML = (html: string) => {
         const category = $(elem).find('td:nth-child(1) > a').attr('title')!;
         const date = new Date(
             parseInt($(elem).find('td:nth-child(5)').attr('data-timestamp')!) *
-                1000
+                1000,
         );
         const seeders = parseInt($(elem).find('td:nth-child(6)').text().trim());
         const leechers = parseInt(
-            $(elem).find('td:nth-child(7)').text().trim()
+            $(elem).find('td:nth-child(7)').text().trim(),
         );
         const downloads = parseInt(
-            $(elem).find('td:nth-child(8)').text().trim()
+            $(elem).find('td:nth-child(8)').text().trim(),
         );
 
         if (id) {
@@ -60,10 +60,10 @@ export const getTorrentsFromRSS = (html: string) => {
         const date = new Date($(elem).find('pubDate').text().trim());
         const seeders = parseInt($(elem).find('nyaa\\:seeders').text().trim());
         const leechers = parseInt(
-            $(elem).find('nyaa\\:leechers').text().trim()
+            $(elem).find('nyaa\\:leechers').text().trim(),
         );
         const downloads = parseInt(
-            $(elem).find('nyaa\\:downloads').text().trim()
+            $(elem).find('nyaa\\:downloads').text().trim(),
         );
         const hash = $(elem).find('nyaa\\:infoHash').text().trim();
         const magnet = `magnet:?xt=urn:btih:${hash}&dn=${name}`;
@@ -84,4 +84,45 @@ export const getTorrentsFromRSS = (html: string) => {
     });
 
     return torrents;
+};
+
+export const getPageCountFromHTML = (html: string) => {
+    const $ = cheerio.load(html);
+    const total = $('.pagination > li:nth-last-child(2)')
+        .text()
+        .trim()
+        .replace(',', '');
+
+    return parseInt(total);
+};
+
+export const getTotalCountFromHTML = (html: string) => {
+    const $ = cheerio.load(html);
+    const total = $('.pagination-page-info')
+        .text()
+        .trim()
+        .split('results')[1]
+        .trim()
+        .split('of')[1]
+        .trim();
+    return parseInt(total);
+};
+
+export const getRangeFromHTML = (html: string) => {
+    const $ = cheerio.load(html);
+    const range = $('.pagination-page-info')
+        .text()
+        .trim()
+        .split('results')[1]
+        .trim()
+        .split('out')[0]
+        .trim();
+    return range;
+};
+
+export const isNextPageAvailable = (html: string) => {
+    const $ = cheerio.load(html);
+    const next = $('.pagination > li:last-child > a').attr('href');
+
+    return next !== undefined;
 };

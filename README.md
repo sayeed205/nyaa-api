@@ -39,21 +39,31 @@ const queryOptions = {
 };
 
 // Search for torrents
-const torrents = await nyaa.search('One Piece', queryOptions);
+const result = await nyaa.search('One Piece', queryOptions);
 /**
- * [
- *     {
- *      id: 000000,
- *      name: 'One Piece by Oda',
- *      date: 2023-08-13T04:20:50.000Z,
- *      seeders: 69,
- *      leechers: 69420,
- *      downloads: 6969,
- *      magnet: 'magnet:?xt=urn:btih:a5fe...',
- *      size: '507.6 MiB',
- *      category: 'Anime - English-translated',
- *    }, ...
- * ]
+ * {
+ *      data:[
+ *          {
+ *          id: 000000,
+ *          name: 'One Piece by Oda',
+ *          date: 2023-08-13T04:20:50.000Z,
+ *          seeders: 69,
+ *          leechers: 69420,
+ *          downloads: 6969,
+ *          magnet: 'magnet:?xt=urn:btih:a5fe...',
+ *          size: '507.6 MiB',
+ *          category: 'Anime - English-translated',
+ *          }, ...
+ *     ],
+ *     total: 100,
+ *     page: 1,
+ *     totalPage: 10,
+ *     perPage: 75
+ *     totalPage: 2,
+ *     range: 1-75
+ *     nextPage: true,
+ *     timeTaken: 0.69
+ * }
  */
 ```
 
@@ -117,9 +127,9 @@ The search options.
 -   [x] Add support for sorting by various fields
 -   [x] Add support for searching by category
 -   [x] Add support for searching by user
--   [ ] Add pagination support
+-   [ ] Add pagination support - still partial support (only for html and normal query)
 -   [ ] Add sukebei support
--   [ ] Write tests for apis
+-   [ ] Write tests for apis - Added partial tests
 
 ## License
 

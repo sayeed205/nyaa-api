@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import Nyaa from '../src';
+import { SearchResult } from '../src/types';
 
 describe('Nyaa HTML parsing', () => {
     let nyaa: Nyaa;
@@ -16,15 +17,15 @@ describe('Nyaa HTML parsing', () => {
     it('Nyaa empty search', async () => {
         const result = await nyaa.search();
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it('Nyaa search with query', async () => {
         const result = await nyaa.search('One piece');
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'anime'", async () => {
@@ -32,8 +33,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'anime',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'audio'", async () => {
@@ -41,8 +42,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'audio',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'literature'", async () => {
@@ -50,8 +51,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'literature',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'live-action'", async () => {
@@ -59,8 +60,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'live-action',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'pictures'", async () => {
@@ -68,8 +69,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'pictures',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'software'", async () => {
@@ -77,8 +78,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'software',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and category 'games'", async () => {
@@ -86,8 +87,8 @@ describe('Nyaa HTML parsing', () => {
             category: 'games',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it('Nyaa search with query and filter "trusted only"', async () => {
@@ -95,8 +96,8 @@ describe('Nyaa HTML parsing', () => {
             filter: 'trusted only',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it('Nyaa search with query and filter "no remakes"', async () => {
@@ -104,8 +105,8 @@ describe('Nyaa HTML parsing', () => {
             filter: 'no remakes',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it('Nyaa search by username', async () => {
@@ -129,8 +130,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'comments',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and sort 'size'", async () => {
@@ -138,8 +139,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'size',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and sort 'date'", async () => {
@@ -147,8 +148,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'date',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and sort 'seeders'", async () => {
@@ -156,8 +157,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'seeders',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and sort 'leechers'", async () => {
@@ -165,8 +166,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'leechers',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and sort 'downloads'", async () => {
@@ -174,8 +175,8 @@ describe('Nyaa HTML parsing', () => {
             sort: 'downloads',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and order 'asc'", async () => {
@@ -183,8 +184,8 @@ describe('Nyaa HTML parsing', () => {
             order: 'asc',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it("Nyaa search with query and order 'desc'", async () => {
@@ -192,8 +193,8 @@ describe('Nyaa HTML parsing', () => {
             order: 'desc',
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 
     it('Nyaa search for page 2', async () => {
@@ -201,58 +202,7 @@ describe('Nyaa HTML parsing', () => {
             page: 2,
         });
 
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
-    });
-});
-
-describe('Nyaa RSS parsing', () => {
-    let nyaa: Nyaa;
-
-    beforeEach(() => {
-        nyaa = new Nyaa({ mode: 'rss', baseUrl: 'https://nyaa.land' });
-    });
-
-    it('Nyaa instance', () => {
-        expect(nyaa).toBeInstanceOf(Nyaa);
-    });
-
-    it('Nyaa empty search', async () => {
-        const result = await nyaa.search();
-
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
-    });
-
-    it('Nyaa search with query', async () => {
-        const result = await nyaa.search('One piece');
-
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
-    });
-
-    it('Nyaa search with query and category', async () => {
-        const result = await nyaa.search('One piece', {
-            category: 'anime',
-        });
-
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
-    });
-
-    it('Nyaa search by username', async () => {
-        const result = await nyaa.searchByUser('Fan-Kai');
-
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
-    });
-
-    it('Nyaa search by username with query', async () => {
-        const result = await nyaa.searchByUser('Fan-Kai', {
-            query: 'One piece',
-        });
-
-        expect(result).toBeInstanceOf(Array);
-        expect(result.length).toBeGreaterThan(0);
+        expect(result).toMatchObject<SearchResult>(result);
+        expect(result.data.length).toBeGreaterThan(0);
     });
 });

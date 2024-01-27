@@ -9,12 +9,12 @@
         "dist"
     ],
     "scripts": {
-        "dev": "vite",
         "build": "tsc && vite build",
         "preview": "vite preview",
         "prepublish": "pnpm build",
         "test": "vitest",
-        "coverage": "vitest run --coverage"
+        "coverage": "vitest run --coverage",
+        "local": "ts-node test.ts"
     },
     "repository": {
         "type": "git",
@@ -34,16 +34,17 @@
     },
     "homepage": "https://github.com/sayeed205/nyaa-api#readme",
     "devDependencies": {
-        "@rollup/plugin-typescript": "11.1.0",
-        "@types/node": "18.15.11",
-        "@vitest/coverage-v8": "^0.34.4",
-        "rimraf": "4.4.1",
-        "rollup-plugin-typescript-paths": "1.4.0",
-        "tslib": "2.5.0",
-        "typescript": "^5.2.2",
-        "vite": "^4.4.9",
-        "vite-plugin-dts": "3.5.3",
-        "vitest": "0.34.4"
+        "@rollup/plugin-typescript": "11.1.6",
+        "@types/node": "20.11.7",
+        "@vitest/coverage-v8": "^1.2.2",
+        "rimraf": "5.0.5",
+        "rollup-plugin-typescript-paths": "1.5.0",
+        "ts-node": "^10.9.2",
+        "tslib": "2.6.2",
+        "typescript": "^5.3.3",
+        "vite": "^5.0.12",
+        "vite-plugin-dts": "3.7.2",
+        "vitest": "1.2.2"
     },
     "dependencies": {
         "cheerio": "1.0.0-rc.12"

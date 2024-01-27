@@ -2,9 +2,17 @@ import {
     NyaaOptions,
     SearchByUserOptions,
     SearchOptions,
+    SearchResult,
     Torrent,
 } from '../types';
-import { getTorrentsFromHTML, getTorrentsFromRSS } from './nyaa.scrapper';
+import {
+    getPageCountFromHTML,
+    getRangeFromHTML,
+    getTorrentsFromHTML,
+    getTorrentsFromRSS,
+    getTotalCountFromHTML,
+    isNextPageAvailable,
+} from './nyaa.scrapper';
 
 /**
  * Nyaa Instance - You can pass options to the constructor but it's not required
@@ -22,7 +30,7 @@ export class Nyaa {
         private readonly options: NyaaOptions = {
             baseUrl: 'https://nyaa.land/',
             mode: 'html',
-        }
+        },
     ) {
         this.options = options;
     }
@@ -67,8 +75,9 @@ export class Nyaa {
             filter: 'no filter',
             sort: '',
             order: '',
-        }
-    ): Promise<Torrent[]> {
+        },
+    ): Promise<SearchResult> {
+        const startTime = Date.now();
         const { page, category, filter, sort, order } = options;
         const p = page! < 1 ? 1 : page;
         let c = '0_0';
@@ -120,12 +129,37 @@ export class Nyaa {
             const url = `${this.options.baseUrl}?page=rss&q=${query}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
             const res = await fetch(url).then(res => res.text());
             const torrents = getTorrentsFromRSS(res);
-            return torrents;
+            const endTime = Date.now();
+            return {
+                data: torrents,
+                total: 0,
+                page: 0,
+                totalPage: 0,
+                perPage: 0,
+                range: '',
+                nextPage: false,
+                timeTaken: endTime - startTime,
+            };
         }
         const url = `${this.options.baseUrl}?&q=${query}&c=${c}&f=${f}&p=${p}&s=${s}&o=${o}`;
         const res = await fetch(url).then(res => res.text());
         const torrents = getTorrentsFromHTML(res);
-        return torrents;
+        const totalPage = query ? getPageCountFromHTML(res) : null;
+        const total = query ? getTotalCountFromHTML(res) : null;
+        const range = query ? getRangeFromHTML(res) : null;
+        const nextPage = isNextPageAvailable(res);
+        const endTime = Date.now();
+        return {
+            data: torrents,
+            total,
+            // if page is not provided then its 1 if page is greater than totalPage then its totalPage
+            page: page! <= 1 ? 1 : page! > totalPage! ? totalPage! : page!,
+            totalPage,
+            perPage: torrents.length,
+            range,
+            nextPage,
+            timeTaken: (endTime - startTime) / 1000,
+        };
     }
 
     /**
@@ -143,7 +177,7 @@ export class Nyaa {
             sort: '',
             order: '',
             query: '',
-        }
+        },
     ): Promise<Torrent[]> {
         const { page, category, filter, sort, order, query } = options;
         const p = page ? page : 1;
